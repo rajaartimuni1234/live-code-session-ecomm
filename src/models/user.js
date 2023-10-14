@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import Authroles from "./utlis/authroles.js";
+import bcrypt from "bcryptjs"
+import e from "express";
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -30,5 +32,21 @@ const userSchema = new mongoose.Schema({
 },
 {timestamps: true}
 )
+
+//Encrypt the password before saving: Hooks
+
+userSchema.pre("save", async function (next){
+    if (!this.isModified('password')) return next()
+    this.password=await bcrypt.hash(this.password, 10)
+next()
+})
+
+userSchema.method= {
+    //compare password
+
+    comparePassword: async function (enterPasssword){
+        return await bcrypt.compare(enterPasssword, this.password)
+    }
+}
 
 export default userSchema;
