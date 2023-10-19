@@ -16,4 +16,6 @@ const collectionShchema= new mongoose.Schema(
 },
 { timestamps: true }
 
-)
+);
+
+export default mongoose.model("Collection", collectionShchema)
