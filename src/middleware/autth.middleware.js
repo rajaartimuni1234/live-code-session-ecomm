@@ -33,4 +33,5 @@ export const authorize =(...requiredRoles)=> asyncHandler(async(req, res, next)=
     if (!requiredRoles.includes(req.user.role)){
         throw new customError("you are not authorized to access this resourece" ,401)
     }
+    next()
 })
